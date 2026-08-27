@@ -1,0 +1,15 @@
+{
+  "name": "Bautista — Full de treball",
+  "short_name": "Full Bautista",
+  "description": "Registre de jornals i expedicions dels aprofitaments forestals",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#5D4037",
+  "theme_color": "#5D4037",
+  "orientation": "portrait-primary",
+  "lang": "ca",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

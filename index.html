@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Bautista — Full de treball</title>
+<meta name="theme-color" content="#5D4037">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Full Bautista">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+:root{
+  color-scheme:light;
+  --marro:#5D4037; --marro-fosc:#3E2723; --marro-clar:#8D6E63;
+  --taronja:#E65100; --verd:#2E7D32; --vermell:#C62828;
+  --fons:#F4F1EE; --carta:#fff; --vora:#DDD5CF; --text:#241C18; --gris:#7A6E67;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{background:var(--fons);color:var(--text);font-size:16px;padding-bottom:calc(96px + env(safe-area-inset-bottom));}
+
+header{background:var(--marro);color:#fff;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top));
+  display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:40;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+header .tit{flex:1;min-width:0;}
+header h1{font-size:17px;font-weight:600;line-height:1.2;}
+header .sub{font-size:12px;color:#D7CCC8;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+header button{background:rgba(255,255,255,.14);border:0;color:#fff;font-size:20px;width:42px;height:42px;
+  border-radius:10px;cursor:pointer;flex:0 0 auto;}
+header button:active{background:rgba(255,255,255,.3);}
+
+.tabs{display:flex;background:var(--marro-fosc);}
+.tabs button{flex:1;background:transparent;border:0;color:#BCAAA4;font-size:14px;font-weight:600;
+  padding:13px 4px;cursor:pointer;border-bottom:3px solid transparent;}
+.tabs button.on{color:#fff;border-bottom-color:var(--taronja);}
+
+.wrap{padding:12px;display:flex;flex-direction:column;gap:12px;}
+.card{background:var(--carta);border:1px solid var(--vora);border-radius:14px;overflow:hidden;}
+.card h2{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gris);
+  padding:12px 14px 0;}
+
+.camp{padding:10px 14px;}
+.camp label{display:block;font-size:13px;font-weight:600;color:var(--gris);margin-bottom:6px;}
+.camp label .req{color:var(--vermell);}
+select,input[type=text],input[type=date],input[type=number]{
+  width:100%;font-size:17px;font-family:inherit;color:var(--text);background:#FBF9F8;
+  border:1.5px solid var(--vora);border-radius:11px;padding:13px 12px;appearance:none;-webkit-appearance:none;}
+select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237A6E67'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat:no-repeat;background-position:right 10px center;background-size:26px;padding-right:40px;}
+select:focus,input:focus{outline:0;border-color:var(--marro);background:#fff;}
+select.buit{border-color:#E0B4B4;background:#FDF5F5;}
+input[type=date]{min-height:49px;}
+
+.rapid{display:flex;gap:8px;margin-top:8px;}
+.rapid button{flex:1;font-size:13px;font-weight:600;padding:9px 4px;border-radius:9px;
+  border:1.5px solid var(--vora);background:#fff;color:var(--gris);cursor:pointer;}
+.rapid button.on{background:var(--marro);border-color:var(--marro);color:#fff;}
+
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.seg button{font-size:18px;font-weight:700;padding:15px 4px;border-radius:11px;
+  border:1.5px solid var(--vora);background:#FBF9F8;color:var(--gris);cursor:pointer;}
+.seg button.on{background:var(--taronja);border-color:var(--taronja);color:#fff;box-shadow:0 2px 6px rgba(230,81,0,.35);}
+.seg button small{display:block;font-size:10px;font-weight:600;opacity:.75;margin-top:2px;}
+
+.btn{display:block;width:100%;font-size:17px;font-weight:700;font-family:inherit;padding:16px;border:0;
+  border-radius:13px;cursor:pointer;color:#fff;background:var(--marro);}
+.btn:active{transform:scale(.985);}
+.btn[disabled]{background:#C6BDB7;color:#fff;}
+.btn.sec{background:#fff;color:var(--marro);border:1.5px solid var(--vora);}
+.btn.wa{background:#25D366;}
+.btn.small{font-size:14px;padding:12px;}
+.pad{padding:12px 14px;}
+
+.linia{display:flex;align-items:center;gap:10px;padding:11px 14px;border-top:1px solid #F0EBE7;}
+.linia:first-of-type{border-top:0;}
+.linia .ico{width:36px;height:36px;flex:0 0 auto;border-radius:9px;display:flex;align-items:center;
+  justify-content:center;font-size:17px;background:#F2EBE6;}
+.linia .ico.exp{background:#E8F1E8;}
+.linia .txt{flex:1;min-width:0;}
+.linia .t1{font-size:14px;font-weight:600;line-height:1.3;}
+.linia .t2{font-size:12px;color:var(--gris);margin-top:2px;line-height:1.3;}
+.linia .del{background:transparent;border:0;color:#B0A49D;font-size:22px;width:36px;height:36px;cursor:pointer;flex:0 0 auto;}
+.linia .del:active{color:var(--vermell);}
+.buida{padding:26px 14px;text-align:center;color:#A99E97;font-size:14px;}
+
+.barra{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.97);
+  border-top:1px solid var(--vora);padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  backdrop-filter:blur(8px);z-index:50;}
+.barra .info{font-size:12px;color:var(--gris);text-align:center;margin-bottom:7px;}
+.barra .info b{color:var(--text);}
+
+.avis{margin:0 14px 12px;padding:11px 13px;border-radius:10px;font-size:13px;line-height:1.45;}
+.avis.ok{background:#E8F5E9;color:#1B5E20;}
+.avis.err{background:#FDECEA;color:#9B1C13;}
+.avis.info{background:#FFF8E1;color:#795548;}
+
+dialog{border:0;border-radius:16px;padding:0;width:min(560px,94vw);max-height:88vh;
+  background:var(--carta);box-shadow:0 12px 40px rgba(0,0,0,.3);}
+dialog::backdrop{background:rgba(0,0,0,.45);}
+.dlg-head{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--marro);color:#fff;
+  position:sticky;top:0;}
+.dlg-head h3{flex:1;font-size:16px;font-weight:600;}
+.dlg-head button{background:rgba(255,255,255,.16);border:0;color:#fff;width:36px;height:36px;
+  border-radius:9px;font-size:19px;cursor:pointer;}
+.dlg-body{padding:6px 0 16px;overflow-y:auto;max-height:calc(88vh - 62px);}
+.llista-cfg{padding:0 14px;}
+.llista-cfg textarea{width:100%;min-height:130px;font-size:15px;font-family:ui-monospace,Menlo,Consolas,monospace;
+  border:1.5px solid var(--vora);border-radius:11px;padding:11px;background:#FBF9F8;resize:vertical;line-height:1.6;}
+.hint{font-size:12px;color:var(--gris);padding:4px 14px 10px;line-height:1.5;}
+.resum-t{width:100%;border-collapse:collapse;font-size:13px;}
+.resum-t th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--gris);
+  padding:7px 14px;background:#F7F3F0;font-weight:700;}
+.resum-t td{padding:8px 14px;border-top:1px solid #F0EBE7;}
+.resum-t td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="tit">
+    <h1>Full de treball</h1>
+    <div class="sub" id="hdrSub">Explotacions Forestals M. Bautista</div>
+  </div>
+  <button id="btnResum" title="Resum">&#128203;</button>
+  <button id="btnCfg" title="Configuraci&oacute;">&#9881;&#65039;</button>
+</header>
+
+<div class="tabs">
+  <button id="tabJ" class="on" data-tab="jornal">&#129717; Jornals</button>
+  <button id="tabE" data-tab="exp">&#128666; Expedicions</button>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ FORMULARI JORNAL ============ -->
+  <div class="card" id="formJornal">
+    <h2>Afegir jornal</h2>
+
+    <div class="camp">
+      <label>Dia <span class="req">*</span></label>
+      <input type="date" id="jData">
+      <div class="rapid">
+        <button type="button" data-dies="0" data-t="j">Avui</button>
+        <button type="button" data-dies="-1" data-t="j">Ahir</button>
+        <button type="button" data-dies="-2" data-t="j">Abans-d'ahir</button>
+      </div>
+    </div>
+
+    <div class="camp">
+      <label>Treballador <span class="req">*</span></label>
+      <select id="jTreb"></select>
+    </div>
+
+    <div class="camp">
+      <label>Aprofitament / finca <span class="req">*</span></label>
+      <select id="jApro"></select>
+    </div>
+
+    <div class="camp">
+      <label>Feina o m&agrave;quina <span class="req">*</span></label>
+      <select id="jMaq"></select>
+    </div>
+
+    <div class="camp">
+      <label>Jornals fets <span class="req">*</span></label>
+      <div class="seg" id="jJorn"></div>
+    </div>
+
+    <div class="camp">
+      <label>Incid&egrave;ncia (opcional)</label>
+      <select id="jObs"></select>
+    </div>
+
+    <div class="pad"><button class="btn" id="jAfegir">&#65291; Afegir al full</button></div>
+  </div>
+
+  <!-- ============ FORMULARI EXPEDICIO ============ -->
+  <div class="card" id="formExp" style="display:none">
+    <h2>Afegir expedici&oacute; (cami&oacute;)</h2>
+
+    <div class="camp">
+      <label>Dia <span class="req">*</span></label>
+      <input type="date" id="eData">
+      <div class="rapid">
+        <button type="button" data-dies="0" data-t="e">Avui</button>
+        <button type="button" data-dies="-1" data-t="e">Ahir</button>
+        <button type="button" data-dies="-2" data-t="e">Abans-d'ahir</button>
+      </div>
+    </div>
+
+    <div class="camp">
+      <label>Aprofitament / finca <span class="req">*</span></label>
+      <select id="eApro"></select>
+    </div>
+
+    <div class="camp">
+      <label>Client dest&iacute; <span class="req">*</span></label>
+      <select id="eClient"></select>
+    </div>
+
+    <div class="camp">
+      <label>Producte <span class="req">*</span></label>
+      <select id="eProd"></select>
+    </div>
+
+    <div class="camp">
+      <label>Xofer / transportista <span class="req">*</span></label>
+      <select id="eXofer"></select>
+    </div>
+
+    <div class="camp">
+      <label>Tones netes de b&agrave;scula <span class="req">*</span></label>
+      <input type="text" id="eTones" inputmode="decimal" autocomplete="off" placeholder="p. ex. 24,82">
+      <div class="hint" style="padding:6px 0 0">Copia el pes net del tiquet de b&agrave;scula. Ha d'estar entre 0 i 45 t.</div>
+    </div>
+
+    <div class="camp">
+      <label>Albar&agrave; / tiquet (opcional)</label>
+      <input type="text" id="eAlb" inputmode="text" placeholder="n&uacute;m. albar&agrave;">
+    </div>
+
+    <div class="pad"><button class="btn" id="eAfegir">&#65291; Afegir al full</button></div>
+  </div>
+
+  <!-- ============ LINIES PENDENTS ============ -->
+  <div class="card">
+    <h2>Full pendent d'enviar</h2>
+    <div id="avisZona"></div>
+    <div id="llista"><div class="buida">Encara no hi ha cap l&iacute;nia.</div></div>
+  </div>
+
+</div>
+
+<!-- ============ BARRA D'ENVIAMENT ============ -->
+<div class="barra">
+  <div class="info" id="barInfo">Cap l&iacute;nia pendent</div>
+  <button class="btn wa" id="btnEnviar" disabled>&#128242; Enviar full per WhatsApp</button>
+</div>
+
+<!-- ============ DIALEG CONFIGURACIO ============ -->
+<dialog id="dlgCfg">
+  <div class="dlg-head"><h3>Configuraci&oacute; (gerent)</h3><button id="cfgTanca">&#10005;</button></div>
+  <div class="dlg-body">
+    <div class="hint">Un element per l&iacute;nia. Els canvis nom&eacute;s afecten aquest tel&egrave;fon. Fes servir <b>Exportar</b> per passar la mateixa configuraci&oacute; a tots els treballadors.</div>
+    <div class="llista-cfg" id="cfgCamps"></div>
+    <div class="pad" style="display:flex;flex-direction:column;gap:9px">
+      <button class="btn small" id="cfgDesa">Desar configuraci&oacute;</button>
+      <button class="btn small sec" id="cfgExp">&#11014; Exportar configuraci&oacute; (fitxer)</button>
+      <button class="btn small sec" id="cfgImp">&#11015; Importar configuraci&oacute; (fitxer)</button>
+      <button class="btn small sec" id="cfgReset" style="color:var(--vermell)">&#8634; Restablir valors de f&agrave;brica</button>
+      <input type="file" id="cfgFile" accept=".json,application/json" style="display:none">
+    </div>
+  </div>
+</dialog>
+
+<!-- ============ DIALEG RESUM ============ -->
+<dialog id="dlgResum">
+  <div class="dlg-head"><h3>Resum del full pendent</h3><button id="resTanca">&#10005;</button></div>
+  <div class="dlg-body" id="resBody"></div>
+</dialog>
+
+<script>
+'use strict';
+const VERSIO = '1.0';
+const KCFG = 'bautista_cfg_v1';
+const KLIN = 'bautista_linies_v1';
+const KTREB = 'bautista_jo_v1';
+
+/* ---------- Configuracio per defecte (editable des de la roda dentada) ---------- */
+const CFG_DEF = {
+  treballadors: ['Ignasi','Marmi','Ruben','Treballador 4','Treballador 5','Treballador 6',
+                 'Treballador 7','Treballador 8','Treballador 9','Treballador 10','Treballador 11'],
+  aprofitaments: ['Cellers de la Serra','Coll de Castell','Can Rovira','Cal Tomàs','Finca Moragas'],
+  maquines: ['Motoserra (tallar)','Skidder (arrossegar)','Autocarregador','Processadora 1270E',
+             'Processadora 1470','Serra San Quirico','Extern 1','Extern 2 (França)','Desbrossar / preparar pista'],
+  clients: ['Rieral','Serfocat','Novalia','Alamus'],
+  productes: ['Serra','Trituració / paper','Biomassa','Puntals','Llenya','Faig'],
+  xofers: ['Marmi','Ignasi','Transport extern']
+};
+const CFG_ETIQ = {
+  treballadors:'Treballadors', aprofitaments:'Aprofitaments / finques',
+  maquines:'Feines i màquines', clients:'Clients', productes:'Productes', xofers:'Xofers'
+};
+const OBS = ['— cap —','Avaria de màquina','Pluja / no es pot treballar','Mig dia per visita mèdica',
+             'Trasllat de màquina','Manteniment / revisió','Accés tallat','Altres'];
+const JORNALS = [
+  {v:0.25, t:'0,25', s:'2 h'}, {v:0.5, t:'0,5', s:'mig dia'}, {v:0.75, t:'0,75', s:'6 h'},
+  {v:1, t:'1', s:'dia sencer'}, {v:1.25, t:'1,25', s:'+2 h'}, {v:1.5, t:'1,5', s:'+4 h'}
+];
+
+/* ---------- Estat ---------- */
+let cfg = carregaCfg();
+let linies = carregaLinies();
+let jJornSel = 1;
+let tab = 'jornal';
+
+function carregaCfg(){
+  try{
+    const g = JSON.parse(lsGet(KCFG));
+    if(g && typeof g === 'object'){
+      const out = {};
+      for(const k of Object.keys(CFG_DEF)) out[k] = Array.isArray(g[k]) && g[k].length ? g[k] : CFG_DEF[k].slice();
+      return out;
+    }
+  }catch(e){}
+  return JSON.parse(JSON.stringify(CFG_DEF));
+}
+function desaCfg(){ try{ lsSet(KCFG, JSON.stringify(cfg)); }catch(e){} }
+function carregaLinies(){ try{ const l = JSON.parse(lsGet(KLIN)); return Array.isArray(l)?l:[]; }catch(e){ return []; } }
+function desaLinies(){ try{ lsSet(KLIN, JSON.stringify(linies)); }catch(e){} }
+
+/* ---------- Utilitats ---------- */
+const $ = s => document.querySelector(s);
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function avui(){ const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0,10); }
+function diaMes(iso, delta){ const d = new Date(iso+'T12:00:00'); d.setDate(d.getDate()+delta); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,10); }
+function dataCurta(iso){ const p = iso.split('-'); return p[2]+'/'+p[1]; }
+function nou(){ return Math.random().toString(36).slice(2,8) + Date.now().toString(36).slice(-4); }
+function num(n, dec){ return n.toLocaleString('ca-ES',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+function omple(sel, arr, buit){
+  sel.innerHTML = '';
+  const o0 = document.createElement('option');
+  o0.value = ''; o0.textContent = buit; sel.appendChild(o0);
+  for(const v of arr){ const o = document.createElement('option'); o.value = v; o.textContent = v; sel.appendChild(o); }
+  marcaBuit(sel);
+}
+function marcaBuit(sel){ sel.classList.toggle('buit', !sel.value); }
+function avis(txt, tipus){
+  const z = $('#avisZona');
+  z.innerHTML = '<div class="avis '+tipus+'">'+txt+'</div>';
+  if(tipus === 'ok') setTimeout(function(){ if(z.firstChild && z.firstChild.classList.contains('ok')) z.innerHTML=''; }, 4000);
+}
+
+/* ---------- Pintat de selects ---------- */
+function pintaSelects(){
+  omple($('#jTreb'), cfg.treballadors, '— Tria el teu nom —');
+  omple($('#jApro'), cfg.aprofitaments, '— Tria l\'aprofitament —');
+  omple($('#jMaq'), cfg.maquines, '— Tria la feina —');
+  omple($('#eApro'), cfg.aprofitaments, '— Tria l\'aprofitament —');
+  omple($('#eClient'), cfg.clients, '— Tria el client —');
+  omple($('#eProd'), cfg.productes, '— Tria el producte —');
+  omple($('#eXofer'), cfg.xofers, '— Tria el xofer —');
+  const so = $('#jObs'); so.innerHTML='';
+  for(const v of OBS){ const o=document.createElement('option'); o.value = (v===OBS[0]?'':v); o.textContent=v; so.appendChild(o); }
+  const jo = lsGet(KTREB);
+  if(jo && cfg.treballadors.indexOf(jo) >= 0){ $('#jTreb').value = jo; marcaBuit($('#jTreb')); $('#hdrSub').textContent = jo; }
+}
+
+/* ---------- Botons de jornals ---------- */
+function pintaJornals(){
+  const c = $('#jJorn'); c.innerHTML = '';
+  for(const j of JORNALS){
+    const b = document.createElement('button');
+    b.type = 'button'; b.dataset.v = j.v;
+    b.innerHTML = j.t + '<small>' + j.s + '</small>';
+    if(j.v === jJornSel) b.classList.add('on');
+    b.onclick = function(){ jJornSel = j.v; pintaJornals(); };
+    c.appendChild(b);
+  }
+}
+
+/* ---------- Llista de linies ---------- */
+function pintaLlista(){
+  const c = $('#llista');
+  if(!linies.length){
+    c.innerHTML = '<div class="buida">Encara no hi ha cap línia.</div>';
+  } else {
+    c.innerHTML = '';
+    const ord = linies.slice().sort(function(a,b){ return a.data===b.data ? 0 : (a.data<b.data?1:-1); });
+    for(const l of ord){
+      const d = document.createElement('div'); d.className = 'linia';
+      let ico, t1, t2;
+      if(l.tipus === 'JORNAL'){
+        ico = '<div class="ico">🪵</div>';
+        t1 = l.maquina + ' · <b>' + num(l.jornals,2).replace(',00','') + '</b> jornals';
+        t2 = dataCurta(l.data) + ' · ' + l.treballador + ' · ' + l.aprofitament + (l.observacions ? ' · ⚠ '+l.observacions : '');
+      } else {
+        ico = '<div class="ico exp">🚛</div>';
+        t1 = num(l.tones,2) + ' t · ' + l.producte;
+        t2 = dataCurta(l.data) + ' · ' + l.aprofitament + ' → ' + l.client + ' · ' + l.xofer + (l.albara ? ' · alb. '+l.albara : '');
+      }
+      d.innerHTML = ico + '<div class="txt"><div class="t1">'+t1+'</div><div class="t2">'+t2+'</div></div>';
+      const b = document.createElement('button'); b.className='del'; b.innerHTML='✕';
+      b.onclick = (function(idl){ return function(){
+        if(confirm('Esborrar aquesta línia del full?')){
+          linies = linies.filter(function(x){ return x.id !== idl; }); desaLinies(); pintaLlista();
+        }
+      }; })(l.id);
+      d.appendChild(b); c.appendChild(d);
+    }
+  }
+  const jorns = linies.filter(function(l){ return l.tipus==='JORNAL'; });
+  const exps  = linies.filter(function(l){ return l.tipus==='EXPEDICIO'; });
+  const tJ = jorns.reduce(function(s,l){ return s+l.jornals; },0);
+  const tT = exps.reduce(function(s,l){ return s+l.tones; },0);
+  $('#barInfo').innerHTML = linies.length
+    ? '<b>'+num(tJ,2).replace(',00','')+'</b> jornals · <b>'+exps.length+'</b> viatges ('+num(tT,2)+' t)'
+    : 'Cap línia pendent';
+  $('#btnEnviar').disabled = !linies.length;
+}
+
+/* ---------- Afegir jornal ---------- */
+$('#jAfegir').onclick = function(){
+  const data = $('#jData').value, treb = $('#jTreb').value, apro = $('#jApro').value, maq = $('#jMaq').value;
+  if(!data){ avis('Falta el <b>dia</b>.','err'); return; }
+  if(!treb){ avis('Falta el <b>treballador</b>.','err'); $('#jTreb').focus(); return; }
+  if(!apro){ avis('Falta l\'<b>aprofitament</b>.','err'); $('#jApro').focus(); return; }
+  if(!maq){ avis('Falta la <b>feina o màquina</b>.','err'); $('#jMaq').focus(); return; }
+  const dup = linies.filter(function(l){ return l.tipus==='JORNAL' && l.data===data && l.treballador===treb && l.maquina===maq; })[0];
+  if(dup && !confirm('Ja tens una línia de "'+maq+'" el dia '+dataCurta(data)+'. Vols afegir-ne una altra igualment?')) return;
+  const tot = linies.filter(function(l){ return l.tipus==='JORNAL' && l.data===data && l.treballador===treb; })
+                    .reduce(function(s,l){ return s+l.jornals; },0) + jJornSel;
+  if(tot > 2){ avis('Compte: amb aquesta línia el dia '+dataCurta(data)+' sumaria <b>'+num(tot,2)+' jornals</b>. Revisa-ho.','info'); }
+  linies.push({ id:nou(), tipus:'JORNAL', data:data, aprofitament:apro, treballador:treb, maquina:maq,
+                jornals:jJornSel, observacions:$('#jObs').value||'' });
+  desaLinies();
+  lsSet(KTREB, treb); $('#hdrSub').textContent = treb;
+  $('#jMaq').value = ''; marcaBuit($('#jMaq')); $('#jObs').value = ''; jJornSel = 1; pintaJornals();
+  pintaLlista(); avis('Línia afegida ✓','ok');
+  window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'});
+};
+
+/* ---------- Afegir expedicio ---------- */
+$('#eAfegir').onclick = function(){
+  const data=$('#eData').value, apro=$('#eApro').value, cli=$('#eClient').value,
+        prod=$('#eProd').value, xof=$('#eXofer').value, tRaw=$('#eTones').value.replace(',','.');
+  if(!data){ avis('Falta el <b>dia</b>.','err'); return; }
+  if(!apro){ avis('Falta l\'<b>aprofitament</b>.','err'); $('#eApro').focus(); return; }
+  if(!cli){ avis('Falta el <b>client</b>.','err'); $('#eClient').focus(); return; }
+  if(!prod){ avis('Falta el <b>producte</b>.','err'); $('#eProd').focus(); return; }
+  if(!xof){ avis('Falta el <b>xofer</b>.','err'); $('#eXofer').focus(); return; }
+  const t = parseFloat(tRaw);
+  if(!isFinite(t) || t <= 0){ avis('Les <b>tones</b> no són vàlides.','err'); $('#eTones').focus(); return; }
+  if(t > 45){ avis('<b>'+num(t,2)+' t</b> és massa per a un camió. Revisa el tiquet.','err'); $('#eTones').focus(); return; }
+  if(t < 5 && !confirm('Només '+num(t,2)+' t en aquest viatge. És correcte?')) return;
+  linies.push({ id:nou(), tipus:'EXPEDICIO', data:data, aprofitament:apro, client:cli, producte:prod,
+                tones:Math.round(t*100)/100, xofer:xof, albara:$('#eAlb').value.trim() });
+  desaLinies();
+  $('#eTones').value=''; $('#eAlb').value='';
+  pintaLlista(); avis('Expedició afegida ✓','ok');
+  window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'});
+};
+
+/* ---------- CSV ---------- */
+const COLS = ['tipus','id','data','aprofitament','treballador','maquina','jornals','client','producte',
+              'tones','xofer','albara','observacions','versio','enviat'];
+function csvCamp(v){
+  v = (v === undefined || v === null) ? '' : String(v);
+  return /[";\r\n]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v;
+}
+function generaCSV(){
+  const ara = new Date().toISOString().slice(0,19).replace('T',' ');
+  const files = [COLS.join(';')];
+  const ord = linies.slice().sort(function(a,b){ return (a.data+a.tipus) < (b.data+b.tipus) ? -1 : 1; });
+  for(const l of ord){
+    files.push([
+      l.tipus, l.id, l.data, l.aprofitament, l.treballador||'', l.maquina||'',
+      l.jornals !== undefined ? String(l.jornals).replace('.',',') : '',
+      l.client||'', l.producte||'',
+      l.tones !== undefined ? l.tones.toFixed(2).replace('.',',') : '',
+      l.xofer||'', l.albara||'', l.observacions||'', VERSIO, ara
+    ].map(csvCamp).join(';'));
+  }
+  return '﻿' + files.join('\r\n') + '\r\n';
+}
+function nomFitxer(){
+  const qui = (lsGet(KTREB) || 'Bautista').replace(/[^A-Za-z0-9]+/g,'');
+  const dates = linies.map(function(l){ return l.data; }).sort();
+  return 'FULL_' + qui + '_' + dates[dates.length-1] + '.csv';
+}
+function textWA(){
+  const l1 = linies.filter(function(l){ return l.tipus==='JORNAL'; });
+  const l2 = linies.filter(function(l){ return l.tipus==='EXPEDICIO'; });
+  let t = '*FULL DE TREBALL — ' + (lsGet(KTREB)||'Bautista') + '*\n';
+  if(l1.length){
+    t += '\n_Jornals_\n';
+    for(const l of l1) t += '• ' + dataCurta(l.data) + ' ' + l.aprofitament + ' — ' + l.maquina + ': ' +
+      num(l.jornals,2).replace(',00','') + (l.observacions ? ' (' + l.observacions + ')' : '') + '\n';
+  }
+  if(l2.length){
+    t += '\n_Expedicions_\n';
+    for(const l of l2) t += '• ' + dataCurta(l.data) + ' ' + l.aprofitament + ' → ' + l.client + ' — ' +
+      num(l.tones,2) + ' t ' + l.producte + ' (' + l.xofer + ')\n';
+  }
+  t += '\nFitxer CSV adjunt per al full de costos.';
+  return t;
+}
+
+/* ---------- Enviar ---------- */
+$('#btnEnviar').onclick = async function(){
+  const csv = generaCSV(), nom = nomFitxer();
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  let fitxer = null;
+  try{ fitxer = new File([blob], nom, {type:'text/csv'}); }catch(e){}
+
+  if(fitxer && navigator.canShare && navigator.canShare({files:[fitxer]})){
+    try{
+      await navigator.share({files:[fitxer], title:'Full de treball', text:textWA()});
+      fetEnviat(); return;
+    }catch(e){ if(e && e.name === 'AbortError') return; }
+  }
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = nom;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+  avis('S\'ha descarregat <b>'+nom+'</b>. Obre WhatsApp, tria el gerent i adjunta el fitxer des de <b>Documents → Baixades</b>.','info');
+  setTimeout(function(){ window.open('https://wa.me/?text='+encodeURIComponent(textWA()), '_blank'); }, 900);
+  setTimeout(fetEnviat, 1500);
+};
+function fetEnviat(){
+  if(confirm('Full enviat. Vols buidar les línies pendents?')){
+    linies = []; desaLinies(); pintaLlista(); avis('Full enviat i buidat ✓','ok');
+  }
+}
+
+/* ---------- Pestanyes ---------- */
+document.querySelectorAll('.tabs button').forEach(function(b){
+  b.onclick = function(){
+    tab = b.dataset.tab;
+    document.querySelectorAll('.tabs button').forEach(function(x){ x.classList.toggle('on', x===b); });
+    $('#formJornal').style.display = tab==='jornal' ? '' : 'none';
+    $('#formExp').style.display    = tab==='exp'    ? '' : 'none';
+  };
+});
+
+/* ---------- Botons de data rapida ---------- */
+document.querySelectorAll('.rapid button').forEach(function(b){
+  b.onclick = function(){
+    const inp = b.dataset.t === 'j' ? $('#jData') : $('#eData');
+    inp.value = diaMes(avui(), parseInt(b.dataset.dies,10));
+    b.parentElement.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on', x===b); });
+  };
+});
+
+/* ---------- Configuracio ---------- */
+function pintaCfg(){
+  const c = $('#cfgCamps'); c.innerHTML = '';
+  for(const k of Object.keys(CFG_DEF)){
+    const d = document.createElement('div'); d.className = 'camp'; d.style.padding = '10px 0';
+    d.innerHTML = '<label>'+CFG_ETIQ[k]+'</label><textarea data-k="'+k+'"></textarea>';
+    d.querySelector('textarea').value = cfg[k].join('\n');
+    c.appendChild(d);
+  }
+}
+$('#btnCfg').onclick = function(){ pintaCfg(); $('#dlgCfg').showModal(); };
+$('#cfgTanca').onclick = function(){ $('#dlgCfg').close(); };
+$('#cfgDesa').onclick = function(){
+  const nouCfg = {};
+  const tas = document.querySelectorAll('#cfgCamps textarea');
+  for(const ta of tas){
+    const v = ta.value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+    if(!v.length){ alert('La llista "'+CFG_ETIQ[ta.dataset.k]+'" no pot quedar buida.'); return; }
+    nouCfg[ta.dataset.k] = v;
+  }
+  cfg = nouCfg; desaCfg(); pintaSelects(); $('#dlgCfg').close(); avis('Configuració desada ✓','ok');
+};
+$('#cfgExp').onclick = function(){
+  const blob = new Blob([JSON.stringify(cfg,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='bautista_config.json';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(url); },3000);
+};
+$('#cfgImp').onclick = function(){ $('#cfgFile').click(); };
+$('#cfgFile').onchange = function(e){
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = function(){
+    try{
+      const g = JSON.parse(r.result); const nouCfg = {};
+      for(const k of Object.keys(CFG_DEF)) nouCfg[k] = Array.isArray(g[k]) && g[k].length ? g[k] : CFG_DEF[k].slice();
+      cfg = nouCfg; desaCfg(); pintaSelects(); pintaCfg(); alert('Configuració importada ✓');
+    }catch(err){ alert('El fitxer no és una configuració vàlida.'); }
+  };
+  r.readAsText(f); e.target.value = '';
+};
+$('#cfgReset').onclick = function(){
+  if(confirm('Restablir totes les llistes als valors de fàbrica?')){
+    cfg = JSON.parse(JSON.stringify(CFG_DEF)); desaCfg(); pintaSelects(); pintaCfg();
+  }
+};
+
+/* ---------- Resum ---------- */
+$('#btnResum').onclick = function(){
+  const b = $('#resBody');
+  if(!linies.length){ b.innerHTML = '<div class="buida">El full és buit.</div>'; $('#dlgResum').showModal(); return; }
+  const perApro = {};
+  for(const l of linies){
+    if(!perApro[l.aprofitament]) perApro[l.aprofitament] = {jornals:0, tones:0, maq:{}};
+    const a = perApro[l.aprofitament];
+    if(l.tipus === 'JORNAL'){ a.jornals += l.jornals; a.maq[l.maquina] = (a.maq[l.maquina]||0) + l.jornals; }
+    else a.tones += l.tones;
+  }
+  let h = '<table class="resum-t"><tr><th>Aprofitament</th><th style="text-align:right">Jornals</th><th style="text-align:right">Tones</th></tr>';
+  for(const k of Object.keys(perApro)){
+    const v = perApro[k];
+    const det = Object.keys(v.maq).map(function(m){ return m+' '+num(v.maq[m],2).replace(',00',''); }).join(' · ') || '—';
+    h += '<tr><td>'+k+'<div style="font-size:11px;color:var(--gris);margin-top:3px">'+det+
+         '</div></td><td class="n">'+num(v.jornals,2).replace(',00','')+'</td><td class="n">'+num(v.tones,2)+'</td></tr>';
+  }
+  h += '</table>';
+  b.innerHTML = h; $('#dlgResum').showModal();
+};
+$('#resTanca').onclick = function(){ $('#dlgResum').close(); };
+
+/* ---------- Marcar selects buits ---------- */
+document.querySelectorAll('select').forEach(function(s){ s.addEventListener('change', function(){ marcaBuit(s); }); });
+
+/* ---------- Arrencada ---------- */
+$('#jData').value = avui(); $('#eData').value = avui();
+document.querySelectorAll('.rapid button[data-dies="0"]').forEach(function(b){ b.classList.add('on'); });
+pintaSelects(); pintaJornals(); pintaLlista();
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function(){});
+</script>
+</body>
+</html>

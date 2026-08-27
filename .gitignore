@@ -1,0 +1,5 @@
+# fitxers locals
+Thumbs.db
+.DS_Store
+*.csv
+bautista_config.json
