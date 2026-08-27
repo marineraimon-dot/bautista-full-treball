@@ -1,5 +1,5 @@
 {
-    "versio":  "2026-08-27 14:20",
+    "versio":  "2026-08-27 17:37",
     "aprofitaments":  [
                           "Cellers de la Serra",
                           "Coll de Castell",
@@ -26,8 +26,7 @@
                      "Desbrossar / preparar pista"
                  ],
     "ubicacions":  [
-                       "Carregador Cellers",
-                       "Pati Castellcir"
+
                    ],
     "clients":  [
                     "Rieral",
