@@ -1,0 +1,48 @@
+{
+    "versio":  "2026-08-27 14:19",
+    "aprofitaments":  [
+                          "Cellers de la Serra",
+                          "Coll de Castell",
+                          "Can Rovira",
+                          "Cal Tomàs",
+                          "Finca Moragas"
+                      ],
+    "treballadors":  [
+                         "Ignasi",
+                         "Marmi",
+                         "Ruben"
+                     ],
+    "maquines":  [
+                     "Motoserra (tallar)",
+                     "Skidder (arrossegar)",
+                     "Autocarregador",
+                     "Processadora 1270E",
+                     "Processadora 1470",
+                     "Serra San Quirico",
+                     "Extern 1",
+                     "Extern 2 (França)",
+                     "Desbrossar / preparar pista"
+                 ],
+    "ubicacions":  [
+
+                   ],
+    "clients":  [
+                    "Rieral",
+                    "Serfocat",
+                    "Novalia",
+                    "Alamus"
+                ],
+    "productes":  [
+                      "Serra",
+                      "Trituració / paper",
+                      "Biomassa",
+                      "Puntals",
+                      "Llenya",
+                      "Faig"
+                  ],
+    "xofers":  [
+                   "Marmi",
+                   "Ignasi",
+                   "Transport extern"
+               ]
+}
