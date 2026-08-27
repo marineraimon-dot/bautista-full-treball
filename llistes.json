@@ -1,5 +1,5 @@
 {
-    "versio":  "2026-08-27 14:19",
+    "versio":  "2026-08-27 14:20",
     "aprofitaments":  [
                           "Cellers de la Serra",
                           "Coll de Castell",
@@ -10,7 +10,9 @@
     "treballadors":  [
                          "Ignasi",
                          "Marmi",
-                         "Ruben"
+                         "Ruben",
+                         "Jordi",
+                         "Pau"
                      ],
     "maquines":  [
                      "Motoserra (tallar)",
@@ -24,7 +26,8 @@
                      "Desbrossar / preparar pista"
                  ],
     "ubicacions":  [
-
+                       "Carregador Cellers",
+                       "Pati Castellcir"
                    ],
     "clients":  [
                     "Rieral",
