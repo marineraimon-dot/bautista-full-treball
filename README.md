@@ -36,10 +36,16 @@ La columna `id` és la clau anti-duplicats del consolidador: un mateix full reen
 `Documents Raimon\NOVALIA FORESTAL\Adquisicions\Bautista\Fulls\` → `Consolidar.bat` → `Bautista_Aprofitaments.xlsx`.
 Detall a `LLEGEIX-ME.md` d'aquella carpeta.
 
-## Configuració
+## Els desplegables
 
-Les llistes desplegables (treballadors, aprofitaments, màquines, clients, productes, xofers) es toquen des de ⚙️ dins l'app i es desen a `localStorage` de cada mòbil. **Exportar / Importar configuració** permet passar les mateixes llistes a tothom amb un fitxer JSON.
+L'app carrega **`llistes.json`** en obrir-se i actualitza els desplegables sola. Aquell fitxer el publica el gerent des del full `LLISTATS` del llibre Excel, amb `Actualitza_app.bat`. Sense cobertura, l'app segueix amb l'última llista desada a `localStorage`.
 
-Els valors de fàbrica són a `CFG_DEF` dins `index.html`. Han de coincidir **exactament** amb `PARAMETRES`, `APROFITAMENTS` i `PREUS_VENDA` del llibre Excel.
+```
+LLISTATS (Excel)  →  Actualitza_app.bat  →  git push  →  llistes.json  →  app
+```
+
+`llistes.json` conté **només noms**: aquest repositori és públic i el `.gitignore` bloqueja `.xlsx`, `.csv` i dashboards perquè no hi entri mai cap cost.
+
+`CFG_DEF` dins `index.html` només és el fallback per al primer arrencament sense xarxa. El botó ⚙️ deixa apedaçar una llista sobre la marxa, però se sobreescriu a la propera sincronització.
 
 L'app no mostra cap import en euros: els costos només viuen al llibre del gerent.
