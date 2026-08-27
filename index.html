@@ -85,6 +85,7 @@ input[type=date]{min-height:49px;}
 .linia .del{background:transparent;border:0;color:#B0A49D;font-size:22px;width:36px;height:36px;cursor:pointer;flex:0 0 auto;}
 .linia .del:active{color:var(--vermell);}
 .buida{padding:26px 14px;text-align:center;color:#A99E97;font-size:14px;}
+.verllistes{text-align:center;font-size:11px;color:#A99E97;padding:2px 14px 6px;}
 
 .barra{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.97);
   border-top:1px solid var(--vora);padding:10px 12px calc(10px + env(safe-area-inset-bottom));
@@ -232,6 +233,8 @@ dialog::backdrop{background:rgba(0,0,0,.45);}
     <div id="llista"><div class="buida">Encara no hi ha cap l&iacute;nia.</div></div>
   </div>
 
+  <div class="verllistes" id="verLlistes"></div>
+
 </div>
 
 <!-- ============ BARRA D'ENVIAMENT ============ -->
@@ -244,7 +247,7 @@ dialog::backdrop{background:rgba(0,0,0,.45);}
 <dialog id="dlgCfg">
   <div class="dlg-head"><h3>Configuraci&oacute; (gerent)</h3><button id="cfgTanca">&#10005;</button></div>
   <div class="dlg-body">
-    <div class="hint">Un element per l&iacute;nia. Els canvis nom&eacute;s afecten aquest tel&egrave;fon. Fes servir <b>Exportar</b> per passar la mateixa configuraci&oacute; a tots els treballadors.</div>
+    <div class="hint"><b>Normalment no cal tocar res aqu&iacute;.</b> Les llistes venen soles del full LLISTATS del gerent cada cop que obres l'app amb cobertura, i el que escriguis aqu&iacute; se sobreescriur&agrave;. Fes-ho servir nom&eacute;s si et quedes sense connexi&oacute; i necessites afegir alguna cosa al moment.</div>
     <div class="llista-cfg" id="cfgCamps"></div>
     <div class="pad" style="display:flex;flex-direction:column;gap:9px">
       <button class="btn small" id="cfgDesa">Desar configuraci&oacute;</button>
@@ -609,10 +612,43 @@ $('#resTanca').onclick = function(){ $('#dlgResum').close(); };
 /* ---------- Marcar selects buits ---------- */
 document.querySelectorAll('select').forEach(function(s){ s.addEventListener('change', function(){ marcaBuit(s); }); });
 
+/* ---------- Sincronitzar llistes amb el full LLISTATS del gerent ---------- */
+const KVER = 'bautista_ver_v1';
+function mostraVersio(v, estat){
+  const e = $('#verLlistes');
+  if(!e) return;
+  e.textContent = v ? ('Llistes ' + v + (estat ? ' · ' + estat : '')) : '';
+}
+async function sincronitzaLlistes(){
+  mostraVersio(lsGet(KVER), 'sense connexió');
+  try{
+    const r = await fetch('llistes.json?v=' + Date.now(), {cache:'no-store'});
+    if(!r.ok) return;
+    const g = await r.json();
+    const nouCfg = {};
+    let canvis = 0;
+    for(const k of Object.keys(CFG_DEF)){
+      if(Array.isArray(g[k]) && g[k].length){
+        if(JSON.stringify(g[k]) !== JSON.stringify(cfg[k])) canvis++;
+        nouCfg[k] = g[k];
+      } else {
+        nouCfg[k] = cfg[k];
+      }
+    }
+    cfg = nouCfg; desaCfg();
+    lsSet(KVER, g.versio || '');
+    pintaSelects();
+    mostraVersio(g.versio, canvis ? 'actualitzades' : 'al dia');
+  }catch(e){
+    // sense cobertura: es continua amb les llistes desades al mòbil
+  }
+}
+
 /* ---------- Arrencada ---------- */
 $('#jData').value = avui(); $('#eData').value = avui();
 document.querySelectorAll('.rapid button[data-dies="0"]').forEach(function(b){ b.classList.add('on'); });
 pintaSelects(); pintaJornals(); pintaLlista();
+sincronitzaLlistes();
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function(){});
 </script>
 </body>

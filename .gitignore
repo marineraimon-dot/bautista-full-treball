@@ -1,5 +1,12 @@
 # fitxers locals
 Thumbs.db
 .DS_Store
+
+# res amb dades del negoci no ha d'entrar mai en aquest repo public:
+# aqui nomes hi va el codi de l'app i llistes.json (que son nomes noms).
 *.csv
+*.xlsx
+*.xlsm
+*.pdf
+Dashboard*.html
 bautista_config.json
