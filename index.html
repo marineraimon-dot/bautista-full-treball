@@ -156,7 +156,7 @@ dialog::backdrop{background:rgba(0,0,0,.45);}
     </div>
 
     <div class="camp">
-      <label>Aprofitament / finca <span class="req">*</span></label>
+      <label>Obra / aprofitament <span class="req">*</span></label>
       <select id="jApro"></select>
     </div>
 
@@ -193,7 +193,7 @@ dialog::backdrop{background:rgba(0,0,0,.45);}
     </div>
 
     <div class="camp">
-      <label>Aprofitament / finca <span class="req">*</span></label>
+      <label>Obra / aprofitament <span class="req">*</span></label>
       <select id="eApro"></select>
     </div>
 
@@ -341,9 +341,9 @@ function avis(txt, tipus){
 /* ---------- Pintat de selects ---------- */
 function pintaSelects(){
   omple($('#jTreb'), cfg.treballadors, '— Tria el teu nom —');
-  omple($('#jApro'), cfg.aprofitaments, '— Tria l\'aprofitament —');
+  omple($('#jApro'), cfg.aprofitaments, '— Tria l\'obra —');
   omple($('#jMaq'), cfg.maquines, '— Tria la feina —');
-  omple($('#eApro'), cfg.aprofitaments, '— Tria l\'aprofitament —');
+  omple($('#eApro'), cfg.aprofitaments, '— Tria l\'obra —');
   omple($('#eClient'), cfg.clients, '— Tria el client —');
   omple($('#eProd'), cfg.productes, '— Tria el producte —');
   omple($('#eXofer'), cfg.xofers, '— Tria el xofer —');
